@@ -1,5 +1,5 @@
-defmodule Fizzbuzzweb.FizzbuzzContextTest do
-  alias Fizzbuzzweb.FizzbuzzContext
+defmodule Fizzbuzz.FizzbuzzContextTest do
+  alias Fizzbuzz.FizzbuzzContext
 
   use ExUnit.Case
 

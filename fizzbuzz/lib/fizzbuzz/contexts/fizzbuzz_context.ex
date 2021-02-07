@@ -1,4 +1,4 @@
-defmodule Fizzbuzzweb.FizzbuzzContext do
+defmodule Fizzbuzz.FizzbuzzContext do
 
   @fizz     "Fizz"
   @buzz     "Buzz"
