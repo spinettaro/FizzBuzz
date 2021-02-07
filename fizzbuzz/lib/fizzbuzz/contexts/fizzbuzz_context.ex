@@ -22,6 +22,14 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   end
 
+  def is_favourite?( number, favourites) when is_number( number) do
+    number in favourites
+  end
+
+  def is_favourite?(_number, _favourites) do
+    false
+  end
+
   def paged_fizzbuzz( params) when (not is_map( params)) do
     raise "The passed params doesn't respect the criteria: you must insert a page and a size -> %{\"page\" => page, \"page_size\" => page_size}"
   end
@@ -36,7 +44,8 @@ defmodule Fizzbuzz.FizzbuzzContext do
       "page_size"     => size,
       "total_pages"   => ceil(@to_limit / size),
       "total_results" => @to_limit,
-      "items"         => items
+      "items"         => items,
+      "favourites"    => Favourites.get_favourites( from, to)
     }
   end
 

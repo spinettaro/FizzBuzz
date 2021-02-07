@@ -35,5 +35,12 @@ defmodule Fizzbuzz.Favourites do
     :deleted
   end
 
+  def get_favourites( from, to) do
+    range= Enum.to_list(from..to )
+    from(f in Fizzbuzz.Favourites, where: f.number in (^range) )
+    |> Repo.all()
+    |> Enum.map( fn f -> f.number end)
+  end
+
 
 end

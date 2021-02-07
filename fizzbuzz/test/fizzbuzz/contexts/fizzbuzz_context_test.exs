@@ -168,4 +168,25 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert( result == :deleted)
   end
 
+  test "Given a number in list is_favourite is true" do
+    # ARRANGE
+    # ACT
+    # ASSERT
+    assert( FizzbuzzContext.is_favourite?( 5, Enum.to_list(1..10)) )
+  end
+
+  test "Given a number not in list is_favourite is false" do
+    # ARRANGE
+    # ACT
+    # ASSERT
+    assert( not FizzbuzzContext.is_favourite?( 5, Enum.to_list(8..10)) )
+  end
+
+  test "Given not a number is_favourite is false" do
+    # ARRANGE
+    # ACT
+    # ASSERT
+    assert( not FizzbuzzContext.is_favourite?( "5", Enum.to_list(1..10)) )
+  end
+
 end
