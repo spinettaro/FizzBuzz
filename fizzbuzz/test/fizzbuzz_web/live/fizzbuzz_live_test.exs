@@ -44,4 +44,17 @@ defmodule FizzbuzzWeb.FizzbuzzLiveTest do
     assert content =~ "401"
   end
 
+  test "fizzbuzz mark as favourite ", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+
+    assert render_click(view, String.to_atom("toggle-favourite"), %{"num" => 1}) =~ "fa fa-star"
+
+  end
+
+  test "fizzbuzz toggle favourite ", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+    render_click(view, String.to_atom("toggle-favourite"), %{"num" => 1})
+    assert render_click(view, String.to_atom("toggle-favourite"), %{"num" => 1}) =~ "fa fa-star-o"
+  end
+
 end

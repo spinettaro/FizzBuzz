@@ -28,12 +28,8 @@ defmodule FizzbuzzWeb.FizzbuzzLive do
     {:noreply, load_data(socket, params) }
   end
 
-  def is_favourite(number, favourites) when is_number( number) do
-    number in favourites
-  end
-
-  def is_favourite(_number, _favourites) do
-    false
+  def is_favourite?( number, favourites) do
+    FizzbuzzContext.is_favourite?( number, favourites)
   end
 
   defp load_data(socket, params) do

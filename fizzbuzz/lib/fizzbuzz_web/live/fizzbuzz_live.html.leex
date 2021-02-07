@@ -1,6 +1,15 @@
 <h1>FizzBuzz Page</h1>
 <section class="phx-hero">
   <%= for item <- @paged_fizzbuzz["items"] do %>
+    <a href="#" phx-click="toggle-favourite" phx-value-num=<%= item %>>
+      <%= cond do %>
+      <% not is_integer(item) -> %>
+      <% is_favourite?(item, @paged_fizzbuzz["favourites"]) -> %>
+        <i class="fa fa-star" aria-hidden="true"></i>
+      <% true -> %>
+        <i class="fa fa-star-o" aria-hidden="true"></i>
+      <% end %>
+    </a>
     <%= item %>
   <% end %>
 </section>
