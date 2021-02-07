@@ -1,7 +1,9 @@
 defmodule Fizzbuzz.FizzbuzzContextTest do
-  alias Fizzbuzz.FizzbuzzContext
 
-  use ExUnit.Case
+  alias Fizzbuzz.FizzbuzzContext
+  alias Fizzbuzz.Favourites
+
+  use Fizzbuzz.DataCase, async: true
 
   test "Given range 1..3 will return 1,2,Fizz" do
     # ARRANGE
@@ -144,6 +146,26 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert( 999971 == result["total_pages"])
     assert( 100_000_000_000 == result["total_results"])
     assert( 90 == Enum.count( result["items"]))
+  end
+
+
+  test "Given number no favourite using toggle makes it as favourite" do
+    # ARRANGE
+    # ACT
+    result= FizzbuzzContext.toggle_favourite( 5)
+    # ASSERT
+    assert( Favourites.is_favourite?(5))
+    assert( result == :added)
+  end
+
+  test "Given number favourite using toggle makes it as no favourite" do
+    # ARRANGE
+    # ACT
+    FizzbuzzContext.toggle_favourite( 5)
+    result= FizzbuzzContext.toggle_favourite( 5)
+    # ASSERT
+    assert( not Favourites.is_favourite?(5) )
+    assert( result == :deleted)
   end
 
 end

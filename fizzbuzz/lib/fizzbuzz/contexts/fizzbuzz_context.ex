@@ -1,5 +1,7 @@
 defmodule Fizzbuzz.FizzbuzzContext do
 
+  alias Fizzbuzz.Favourites
+
   @fizz     "Fizz"
   @buzz     "Buzz"
   @fizzbuzz @fizz<>@buzz
@@ -10,6 +12,15 @@ defmodule Fizzbuzz.FizzbuzzContext do
   @to_limit 100_000_000_000
 
   @default_params %{"page" => 1, "page_size" => 100}
+
+  def toggle_favourite( number) do
+
+    case Favourites.is_favourite?( number) do
+      true  -> Favourites.delete_favourite( number)
+      false -> Favourites.add_favourite( number)
+    end
+
+  end
 
   def paged_fizzbuzz( params) when (not is_map( params)) do
     raise "The passed params doesn't respect the criteria: you must insert a page and a size -> %{\"page\" => page, \"page_size\" => page_size}"
