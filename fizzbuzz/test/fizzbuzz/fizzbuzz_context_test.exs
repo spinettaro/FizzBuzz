@@ -25,7 +25,7 @@ defmodule Fizzbuzzweb.FizzbuzzContextTest do
     assert( result ==  expected)
   end
 
-  test "Given range 10..15 will return Fizz Buzz and FizzBuzz" do
+  test "Given range 10..15 will return Fizz,Buzz and FizzBuzz" do
     # ARRANGE
     from=10
     to=15
