@@ -120,4 +120,30 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert( 15 == Enum.count( result["items"]))
   end
 
+  test "Given page 5 size 100 will return paged result" do
+    # ARRANGE
+    pagination= %{"page" => 5, "page_size" => 250}
+    # ACT
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
+    # ASSERT
+    assert( 5  == result["page"])
+    assert( 250 == result["page_size"])
+    assert( 400000000 == result["total_pages"])
+    assert( 100_000_000_000 == result["total_results"])
+    assert( 250 == Enum.count( result["items"]))
+  end
+
+  test "Given last page with size 100_003 will return paged result and less items than size" do
+    # ARRANGE
+    pagination= %{"page" => 999971, "page_size" => 100_003}
+    # ACT
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
+    # ASSERT
+    assert( 999971  == result["page"])
+    assert( 100_003 == result["page_size"])
+    assert( 999971 == result["total_pages"])
+    assert( 100_000_000_000 == result["total_results"])
+    assert( 90 == Enum.count( result["items"]))
+  end
+
 end

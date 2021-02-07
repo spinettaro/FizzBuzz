@@ -17,8 +17,8 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   def paged_fizzbuzz( params) do
     %{"page" => page, "page_size" => size}= scan_params( params)
-    from= ( (page - 1) * size) + 1
-    to= from - 1 + size
+    from= max(1, ( (page - 1) * size) + 1)
+    to= min(@to_limit, from - 1 + size)
     items= fizzbuzz(from, to)
     %{
       "page"          => page,
