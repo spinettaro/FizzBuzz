@@ -69,6 +69,13 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert_raise(RuntimeError, fn -> FizzbuzzContext.paged_fizzbuzz( pagination) end)
   end
 
+  test "Given not map as pagination return error" do
+    # ARRANGE
+    pagination= []
+    # ACT ASSERT
+    assert_raise(RuntimeError, fn -> FizzbuzzContext.paged_fizzbuzz( pagination) end)
+  end
+
   test "Given empty pagination will return defaults: page 1 size 100" do
     # ARRANGE
     pagination= %{}
@@ -90,6 +97,19 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
   test "Given page 1 size 15 will return paged result" do
     # ARRANGE
     pagination= %{"page" => 1, "page_size" => 15}
+    # ACT
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
+    # ASSERT
+    assert( 1  == result["page"])
+    assert( 15 == result["page_size"])
+    assert( 6666666667 == result["total_pages"])
+    assert( 100_000_000_000 == result["total_results"])
+    assert( 15 == Enum.count( result["items"]))
+  end
+
+  test "Given page 1 size 15 as strings will return paged result" do
+    # ARRANGE
+    pagination= %{"page" => "1", "page_size" => "15"}
     # ACT
     result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
