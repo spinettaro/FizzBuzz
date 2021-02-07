@@ -15,6 +15,12 @@ defmodule FizzbuzzWeb.FizzbuzzLive do
     {:noreply, load_data(socket, pagination) }
   end
 
+  @impl true
+  def handle_event("goto-page", %{"page" => _page} = params, socket) do
+    params= Map.merge(socket.assigns.paged_fizzbuzz, params)
+    {:noreply, load_data(socket, params) }
+  end
+
   defp load_data(socket, params) do
     assign( socket, paged_fizzbuzz: FizzbuzzContext.paged_fizzbuzz(params))
   end

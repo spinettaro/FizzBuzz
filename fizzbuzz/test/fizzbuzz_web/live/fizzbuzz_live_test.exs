@@ -25,4 +25,23 @@ defmodule FizzbuzzWeb.FizzbuzzLiveTest do
     assert content =~ "248"
   end
 
+  test "fizzbuzz click next page ", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+    content= view |> element("#go_to_next") |> render_click()
+    assert content =~ "101"
+  end
+
+  test "fizzbuzz click prev page remain on page 1 ", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+    content= view |> element("#go_to_prev") |> render_click()
+    assert content =~ "1"
+  end
+
+  test "fizzbuzz click page 5 ", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+    assert not (render(view) =~ "401")
+    content= view |> element("#go_to_5") |> render_click()
+    assert content =~ "401"
+  end
+
 end

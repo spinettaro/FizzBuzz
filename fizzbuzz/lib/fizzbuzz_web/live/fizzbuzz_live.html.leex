@@ -8,3 +8,4 @@
 <%= f = form_for :pagination, "#", [phx_change: :on_size_change] %>
     <%= select f, :page_size, @page_sizes, selected: @paged_fizzbuzz["page_size"] %>
 </form>
+<%= live_component( @socket, FizzbuzzWeb.PaginationComponent, id: "fizzbuzz_pagination",  paged_fizzbuzz: @paged_fizzbuzz) %>
