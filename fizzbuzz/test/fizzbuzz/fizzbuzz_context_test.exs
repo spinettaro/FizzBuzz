@@ -52,4 +52,39 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert_raise(RuntimeError, "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than 100000000000", fn -> FizzbuzzContext.fizzbuzz(from, to) end)
   end
 
+  test "Given page 1 size 15 will return Fizz Buzz and FizzBuzz" do
+    # ARRANGE
+    pagination= %{"page" => 1, "page_size" => 15}
+    # ACT
+    result= FizzbuzzContext.fizzbuzz( pagination)
+    # ASSERT
+    expected= [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+    assert( result ==  expected)
+  end
+
+  test "Given nil pagination return error" do
+    # ARRANGE
+    pagination= nil
+    # ACT ASSERT
+    assert_raise(RuntimeError, fn -> FizzbuzzContext.fizzbuzz( pagination) end)
+  end
+
+  test "Given empty pagination will return defaults: page 1 size 100" do
+    # ARRANGE
+    pagination= %{}
+    # ACT
+    result= FizzbuzzContext.fizzbuzz( pagination)
+    # ASSERT
+    assert( 100 = Enum.count(result) )
+  end
+
+  test "Given page 1 size 1000 will return 1000 elements" do
+    # ARRANGE
+    pagination= %{"page" => 1, "page_size" => 1000}
+    # ACT
+    result= FizzbuzzContext.fizzbuzz( pagination)
+    # ASSERT
+    assert( 1000 == Enum.count( result))
+  end
+
 end

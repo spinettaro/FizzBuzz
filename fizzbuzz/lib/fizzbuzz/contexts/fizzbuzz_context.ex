@@ -9,6 +9,20 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   @to_limit 100_000_000_000
 
+  @default_params %{"page" => 1, "page_size" => 100}
+
+  def fizzbuzz(nil) do
+    raise "The passed params doesn't respect the criteria: you must insert a page and a size -> %{\"page\" => page, \"page_size\" => page_size}"
+  end
+
+  def fizzbuzz( params) do
+    %{"page" => page, "page_size" => size}= scan_params( params)
+    from= ( (page - 1) * size) + 1
+    to= from - 1 + size
+    fizzbuzz(from, to)
+  end
+
+
   def fizzbuzz(from, to) when is_integer(from) and is_integer(from) and to <= @to_limit do
     Enum.map(from..to, fn number ->
       fizz = rem(number, @fizz_divisor) == 0
@@ -24,6 +38,12 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   def fizzbuzz(from, to) do
     raise "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than #{@to_limit}"
+  end
+
+  def scan_params( params) do
+    Map.merge(@default_params, params)
+    |> Map.update( "page", 1, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
+    |> Map.update( "page_size", 1000, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
   end
 
 end
