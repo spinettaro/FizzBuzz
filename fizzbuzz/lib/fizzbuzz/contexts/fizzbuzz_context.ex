@@ -21,7 +21,7 @@ defmodule Fizzbuzz.FizzbuzzContext do
     to= min(@to_limit, from - 1 + size)
     items= fizzbuzz(from, to)
     %{
-      "page"          => page,
+      "page"          => max(1, page),
       "page_size"     => size,
       "total_pages"   => ceil(@to_limit / size),
       "total_results" => @to_limit,
