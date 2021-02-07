@@ -16,4 +16,13 @@ defmodule FizzbuzzWeb.FizzbuzzLiveTest do
     |> Enum.each(fn str -> assert String.contains?(content, str)  end)
   end
 
+  test "fizzbuzz select page size 250", %{conn: conn} do
+    change= %{"pagination" => %{"page_size" => 250}}
+    {:ok, view, _html} = live(conn, "/fizzbuzz")
+    content= view |> element("form") |> render_change(change)
+
+    assert content =~ "1"
+    assert content =~ "248"
+  end
+
 end
