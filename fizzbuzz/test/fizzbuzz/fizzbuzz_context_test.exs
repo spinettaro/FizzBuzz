@@ -56,35 +56,48 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ARRANGE
     pagination= %{"page" => 1, "page_size" => 15}
     # ACT
-    result= FizzbuzzContext.fizzbuzz( pagination)
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
     expected= [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
-    assert( result ==  expected)
+    assert( result["items"] ==  expected)
   end
 
   test "Given nil pagination return error" do
     # ARRANGE
     pagination= nil
     # ACT ASSERT
-    assert_raise(RuntimeError, fn -> FizzbuzzContext.fizzbuzz( pagination) end)
+    assert_raise(RuntimeError, fn -> FizzbuzzContext.paged_fizzbuzz( pagination) end)
   end
 
   test "Given empty pagination will return defaults: page 1 size 100" do
     # ARRANGE
     pagination= %{}
     # ACT
-    result= FizzbuzzContext.fizzbuzz( pagination)
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
-    assert( 100 = Enum.count(result) )
+    assert( 100 = Enum.count(result["items"]) )
   end
 
   test "Given page 1 size 1000 will return 1000 elements" do
     # ARRANGE
     pagination= %{"page" => 1, "page_size" => 1000}
     # ACT
-    result= FizzbuzzContext.fizzbuzz( pagination)
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
-    assert( 1000 == Enum.count( result))
+    assert( 1000 == Enum.count( result["items"]))
+  end
+
+  test "Given page 1 size 15 will return paged result" do
+    # ARRANGE
+    pagination= %{"page" => 1, "page_size" => 15}
+    # ACT
+    result= FizzbuzzContext.paged_fizzbuzz( pagination)
+    # ASSERT
+    assert( 1  == result["page"])
+    assert( 15 == result["page_size"])
+    assert( 6666666667 == result["total_pages"])
+    assert( 100_000_000_000 == result["total_results"])
+    assert( 15 == Enum.count( result["items"]))
   end
 
 end

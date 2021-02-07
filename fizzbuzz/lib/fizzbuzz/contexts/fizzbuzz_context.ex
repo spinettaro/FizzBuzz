@@ -11,15 +11,22 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   @default_params %{"page" => 1, "page_size" => 100}
 
-  def fizzbuzz(nil) do
+  def paged_fizzbuzz( params) when (not is_map( params)) do
     raise "The passed params doesn't respect the criteria: you must insert a page and a size -> %{\"page\" => page, \"page_size\" => page_size}"
   end
 
-  def fizzbuzz( params) do
+  def paged_fizzbuzz( params \\ %{}) do
     %{"page" => page, "page_size" => size}= scan_params( params)
     from= ( (page - 1) * size) + 1
     to= from - 1 + size
-    fizzbuzz(from, to)
+    items= fizzbuzz(from, to)
+    %{
+      "page"          => page,
+      "page_size"     => size,
+      "total_pages"   => ceil(@to_limit / size),
+      "total_results" => @to_limit,
+      "items"         => items
+    }
   end
 
 
