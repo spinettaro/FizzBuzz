@@ -10,9 +10,9 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     from=1
     to=3
     # ACT
-    result= FizzbuzzContext.fizzbuzz(from, to)
+    result= FizzbuzzContext.fizzbuzz(from, to, [])
     # ASSERT
-    expected= [{1, 1}, {2, 2}, {3, "Fizz"}]
+    expected= [{1, 1, false}, {2, 2, false}, {3, "Fizz", false}]
     assert( result ==  expected)
   end
 
@@ -21,9 +21,9 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     from=4
     to=5
     # ACT
-    result= FizzbuzzContext.fizzbuzz(from, to)
+    result= FizzbuzzContext.fizzbuzz(from, to, [])
     # ASSERT
-    expected= [{4, 4}, {5, "Buzz"}]
+    expected= [{4, 4, false}, {5, "Buzz", false}]
     assert( result ==  expected)
   end
 
@@ -32,9 +32,9 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     from=10
     to=15
     # ACT
-    result= FizzbuzzContext.fizzbuzz(from, to)
+    result= FizzbuzzContext.fizzbuzz(from, to, [])
     # ASSERT
-    expected= [{10, "Buzz"}, {11, 11}, {12, "Fizz"}, {13, 13}, {14, 14}, {15, "FizzBuzz"}]
+    expected= [{10, "Buzz", false}, {11, 11, false}, {12, "Fizz", false}, {13, 13, false}, {14, 14, false}, {15, "FizzBuzz", false}]
     assert( result ==  expected)
   end
 
@@ -43,7 +43,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     from="a"
     to="b"
     # ACT and ASSERT
-    assert_raise(RuntimeError, "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than 100000000000", fn -> FizzbuzzContext.fizzbuzz(from, to) end)
+    assert_raise(RuntimeError, "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than 100000000000. Favourites must be a list", fn -> FizzbuzzContext.fizzbuzz(from, to, []) end)
   end
 
   test "Given a range over the limit will raise an exception" do
@@ -51,7 +51,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     from=0
     to=100000000000 + 1
     # ACT and ASSERT
-    assert_raise(RuntimeError, "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than 100000000000", fn -> FizzbuzzContext.fizzbuzz(from, to) end)
+    assert_raise(RuntimeError, "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than 100000000000. Favourites must be a list", fn -> FizzbuzzContext.fizzbuzz(from, to, []) end)
   end
 
   test "Given page 1 size 15 will return Fizz Buzz and FizzBuzz" do
@@ -60,7 +60,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ACT
     result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
-    expected= [{1, 1}, {2, 2}, {3, "Fizz"}, {4, 4}, {5, "Buzz"}, {6, "Fizz"}, {7, 7}, {8, 8}, {9, "Fizz"}, {10, "Buzz"}, {11, 11}, {12, "Fizz"}, {13, 13}, {14, 14}, {15, "FizzBuzz"}]
+    expected= [{1, 1, false}, {2, 2, false}, {3, "Fizz", false}, {4, 4, false}, {5, "Buzz", false}, {6, "Fizz", false}, {7, 7, false}, {8, 8, false}, {9, "Fizz", false}, {10, "Buzz", false}, {11, 11, false}, {12, "Fizz", false}, {13, 13, false}, {14, 14, false}, {15, "FizzBuzz", false}]
     assert( result["items"] ==  expected)
   end
 
@@ -152,20 +152,18 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
   test "Given number no favourite using toggle makes it as favourite" do
     # ARRANGE
     # ACT
-    result= FizzbuzzContext.toggle_favourite( 5)
+    FizzbuzzContext.toggle_favourite( 5)
     # ASSERT
     assert( Favourites.is_favourite?(5))
-    assert( result == :added)
   end
 
   test "Given number favourite using toggle makes it as no favourite" do
     # ARRANGE
     # ACT
     FizzbuzzContext.toggle_favourite( 5)
-    result= FizzbuzzContext.toggle_favourite( 5)
+    FizzbuzzContext.toggle_favourite( 5)
     # ASSERT
     assert( not Favourites.is_favourite?(5) )
-    assert( result == :deleted)
   end
 
   test "Given a number in list is_favourite is true" do
