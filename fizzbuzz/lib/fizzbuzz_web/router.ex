@@ -21,10 +21,11 @@ defmodule FizzbuzzWeb.Router do
     live "/fizzbuzz", FizzbuzzLive, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", FizzbuzzWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", FizzbuzzWeb.Api do
+    pipe_through :api
+
+    get "/fizzbuzz", FizzbuzzController, :get_fizzbuzz
+  end
 
   # Enables LiveDashboard only for development
   #
