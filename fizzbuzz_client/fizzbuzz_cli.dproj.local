@@ -3,6 +3,9 @@
 	<Transactions>
     <Transaction>2020/10/19 14:41:08.000.960,=C:\Users\Daniele Spinetti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2020/11/11 21:22:44.000.026,=C:\Users\Daniele Spinetti\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/02/08 21:35:20.063,C:\DEV\FizzBuzz\fizzbuzz_client\fizzbuzz_cli.dproj=C:\Users\Daniele Spinetti\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>2021/02/08 21:35:20.000.063,C:\DEV\FizzBuzz\fizzbuzz_client\fizzbuzz_cli.dproj=C:\Users\Daniele Spinetti\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>2021/02/08 21:41:55.000.315,=C:\DEV\FizzBuzz\fizzbuzz_client\Console.pas</Transaction>
+    <Transaction>2021/02/08 21:48:33.000.373,=C:\DEV\FizzBuzz\fizzbuzz_client\Unit1.pas</Transaction>
+    <Transaction>2021/02/08 21:48:52.000.978,C:\DEV\FizzBuzz\fizzbuzz_client\Unit1.pas=C:\DEV\FizzBuzz\fizzbuzz_client\GpCommandLineParser.pas</Transaction>
   </Transactions>
 </BorlandProject>

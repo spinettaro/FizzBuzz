@@ -1,17 +1,45 @@
-program fizzbuzz_cli;
+﻿program fizzbuzz_cli;
 
 {$APPTYPE CONSOLE}
-
 {$R *.res}
 
 uses
-  System.SysUtils;
+    System.SysUtils,
+    Console in 'Console.pas';
+
+procedure Logo;
+begin
+    NormVideo;
+
+    Writeln;
+
+    TextColor(LightGreen);
+
+    Writeln('  Welcome to FizzBuzz CLI');
+    Writeln;
+    Writeln;
+
+    TextColor(LightRed);
+
+    Writeln('  ███████╗██╗███████╗███████╗██████╗ ██╗   ██╗███████╗███████╗     ██████╗██╗     ██╗');
+    Writeln('  ██╔════╝██║╚══███╔╝╚══███╔╝██╔══██╗██║   ██║╚══███╔╝╚══███╔╝    ██╔════╝██║     ██║');
+    Writeln('  █████╗  ██║  ███╔╝   ███╔╝ ██████╔╝██║   ██║  ███╔╝   ███╔╝     ██║     ██║     ██║');
+    Writeln('  ██╔══╝  ██║ ███╔╝   ███╔╝  ██╔══██╗██║   ██║ ███╔╝   ███╔╝      ██║     ██║     ██║');
+    Writeln('  ██║     ██║███████╗███████╗██████╔╝╚██████╔╝███████╗███████╗    ╚██████╗███████╗██║');
+    Writeln('  ╚═╝     ╚═╝╚══════╝╚══════╝╚═════╝  ╚═════╝ ╚══════╝╚══════╝     ╚═════╝╚══════╝╚═╝');
+
+    NormVideo;
+end;
 
 begin
-  try
+    Logo;
+    TextColor(LightGreen);
+    try
     { TODO -oUser -cConsole Main : Insert code here }
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
-  end;
+        readln;
+    except
+        on E: Exception do
+            Writeln(E.ClassName, ': ', E.Message);
+    end;
+
 end.
