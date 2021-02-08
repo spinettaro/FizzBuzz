@@ -187,4 +187,11 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     assert( not FizzbuzzContext.is_favourite?( "5", Enum.to_list(1..10)) )
   end
 
+  test "Given not a number using toggle raise exception" do
+    # ARRANGE
+    # ACT
+    # ASSERT
+    assert_raise(Ecto.Query.CastError, fn -> FizzbuzzContext.toggle_favourite( "a") end)
+  end
+
 end

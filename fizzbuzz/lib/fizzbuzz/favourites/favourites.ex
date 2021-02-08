@@ -20,8 +20,7 @@ defmodule Fizzbuzz.Favourites do
   def add_favourite( number) do
     %Fizzbuzz.Favourites{}
     |> changeset(%{number: number})
-    |> Repo.insert( on_conflict: :nothing, conflict_target: [:number], returning: [:number])
-    :added
+    |> Repo.insert!( on_conflict: :nothing, conflict_target: [:number], returning: [:number])
   end
 
   def is_favourite?( number) do
@@ -32,7 +31,6 @@ defmodule Fizzbuzz.Favourites do
   def delete_favourite( number) do
     from(f in Fizzbuzz.Favourites, where: f.number == ^number )
     |> Repo.delete_all()
-    :deleted
   end
 
   def get_favourites( from, to) do
