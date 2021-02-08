@@ -10,7 +10,9 @@ defmodule Fizzbuzz.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      # test coverage
+      test_coverage: [ignore_modules: [Fizzbuzz.Application, FizzbuzzWeb.ChannelCase, FizzbuzzWeb.ErrorHelpers, FizzbuzzWeb, Fizzbuzz.DataCase, Fizzbuzz.Repo, FizzbuzzWeb.LayoutView, FizzbuzzWeb.ErrorView]]
     ]
   end
 
