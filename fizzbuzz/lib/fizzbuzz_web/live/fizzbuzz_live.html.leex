@@ -1,8 +1,8 @@
 <h1>FizzBuzz Page</h1>
 <section class="phx-hero">
-  <%= for {number, display} <- @paged_fizzbuzz["items"] do %>
+  <%= for {number, display, is_favourite} <- @paged_fizzbuzz["items"] do %>
     <a href="#" phx-click="toggle-favourite" phx-value-num=<%= number %>>
-      <%= if is_favourite?(number, @paged_fizzbuzz["favourites"]) do %>
+      <%= if is_favourite do %>
         <i class="fa fa-star" aria-hidden="true"></i>
       <% else %>
         <i class="fa fa-star-o" aria-hidden="true"></i>

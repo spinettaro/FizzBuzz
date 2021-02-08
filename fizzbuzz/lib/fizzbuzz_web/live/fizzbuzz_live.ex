@@ -28,13 +28,8 @@ defmodule FizzbuzzWeb.FizzbuzzLive do
     {:noreply, load_data(socket, params) }
   end
 
-  def is_favourite?( number, favourites) do
-    FizzbuzzContext.is_favourite?( number, favourites)
-  end
-
   defp load_data(socket, params) do
     assign( socket, paged_fizzbuzz: FizzbuzzContext.paged_fizzbuzz(params))
   end
-
 
 end

@@ -41,33 +41,34 @@ defmodule Fizzbuzz.FizzbuzzContext do
     %{"page" => page, "page_size" => size}= scan_params( params)
     from= max(1, ( (page - 1) * size) + 1)
     to= min(@to_limit, from - 1 + size)
-    items= fizzbuzz(from, to)
+    items= fizzbuzz(from, to, Favourites.get_favourites( from, to) )
     %{
       "page"          => max(1, page),
       "page_size"     => size,
       "total_pages"   => ceil(@to_limit / size),
       "total_results" => @to_limit,
-      "items"         => items,
-      "favourites"    => Favourites.get_favourites( from, to)
+      "items"         => items
     }
   end
 
 
-  def fizzbuzz(from, to) when is_integer(from) and is_integer(from) and to <= @to_limit do
-    Enum.map(from..to, fn number ->
-      fizz = rem(number, @fizz_divisor) == 0
-      buzz = rem(number, @buzz_divisor) == 0
-      cond do
-        fizz and buzz -> {number, @fizzbuzz}
-        fizz          -> {number, @fizz}
-        buzz          -> {number, @buzz}
-        true          -> {number, number}
-      end
-    end)
+  def fizzbuzz(from, to, favourites) when is_integer(from) and is_integer(from) and to <= @to_limit and is_list( favourites) do
+    Enum.map(from..to, fn number -> {number, fizzbuzz( number), is_favourite?( number, favourites) } end)
   end
 
-  def fizzbuzz(from, to) do
-    raise "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than #{@to_limit}"
+  def fizzbuzz(from, to, _favourites) do
+    raise "The passed range #{from}..#{to} doesn't respect the criteria: `from` and `to` must be integers and `to` must be less than #{@to_limit}. Favourites must be a list"
+  end
+
+  defp fizzbuzz( number) when is_integer(number) do
+    fizz = rem(number, @fizz_divisor) == 0
+    buzz = rem(number, @buzz_divisor) == 0
+    cond do
+        fizz and buzz -> @fizzbuzz
+        fizz          -> @fizz
+        buzz          -> @buzz
+        true          -> number
+    end
   end
 
   defp scan_params( params) do
