@@ -161,6 +161,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Console.pas"/>
+        <DCCReference Include="CommandLineU.pas"/>
+        <DCCReference Include="GpCommandLineParser.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
