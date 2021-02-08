@@ -25,6 +25,7 @@ defmodule FizzbuzzWeb.Router do
     pipe_through :api
 
     get "/fizzbuzz", FizzbuzzController, :get_fizzbuzz
+    put "/fizzbuzz", FizzbuzzController, :mark_fizzbuzz
   end
 
   # Enables LiveDashboard only for development

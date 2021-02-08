@@ -28,4 +28,31 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
     assert( 100_000_000_000 == result["total_results"])
     assert( 15 == Enum.count( result["items"]))
   end
+
+  test "fizzbuzz mark 1 as favourite", %{conn: conn} do
+    # ARRANGE
+    # ACT
+    conn = conn |> put("/api/fizzbuzz", number: 1, is_favourite: true)
+    # ASSERT
+    assert 200 == conn.status
+    conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")
+    result= Jason.decode!( conn.resp_body)
+    assert( 1  == result["page"])
+    assert( 1 == result["page_size"])
+    assert( [[1,1,true]] == result["items"])
+  end
+
+  test "fizzbuzz mark 1 to favourite true and then false", %{conn: conn} do
+    # ARRANGE
+    # ACT
+    conn = conn |> put("/api/fizzbuzz", number: 1, is_favourite: true) |> put("/api/fizzbuzz", number: 1, is_favourite: false)
+    # ASSERT
+    assert 200 == conn.status
+    conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")
+    result= Jason.decode!( conn.resp_body)
+    assert( 1  == result["page"])
+    assert( 1 == result["page_size"])
+    assert( [[1,1,false]] == result["items"])
+  end
+
 end
