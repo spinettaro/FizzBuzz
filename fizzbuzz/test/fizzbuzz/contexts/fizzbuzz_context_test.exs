@@ -12,7 +12,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ACT
     result= FizzbuzzContext.fizzbuzz(from, to)
     # ASSERT
-    expected= [1, 2, "Fizz"]
+    expected= [{1, 1}, {2, 2}, {3, "Fizz"}]
     assert( result ==  expected)
   end
 
@@ -23,7 +23,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ACT
     result= FizzbuzzContext.fizzbuzz(from, to)
     # ASSERT
-    expected= [4, "Buzz"]
+    expected= [{4, 4}, {5, "Buzz"}]
     assert( result ==  expected)
   end
 
@@ -34,7 +34,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ACT
     result= FizzbuzzContext.fizzbuzz(from, to)
     # ASSERT
-    expected= ["Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+    expected= [{10, "Buzz"}, {11, 11}, {12, "Fizz"}, {13, 13}, {14, 14}, {15, "FizzBuzz"}]
     assert( result ==  expected)
   end
 
@@ -60,7 +60,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ACT
     result= FizzbuzzContext.paged_fizzbuzz( pagination)
     # ASSERT
-    expected= [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+    expected= [{1, 1}, {2, 2}, {3, "Fizz"}, {4, 4}, {5, "Buzz"}, {6, "Fizz"}, {7, 7}, {8, 8}, {9, "Fizz"}, {10, "Buzz"}, {11, 11}, {12, "Fizz"}, {13, 13}, {14, 14}, {15, "FizzBuzz"}]
     assert( result["items"] ==  expected)
   end
 

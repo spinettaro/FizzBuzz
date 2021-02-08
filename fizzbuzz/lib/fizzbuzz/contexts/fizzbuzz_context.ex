@@ -11,7 +11,10 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   @to_limit 100_000_000_000
 
-  @default_params %{"page" => 1, "page_size" => 100}
+  @default_page 1
+  @default_page_size 100
+
+  @default_params %{"page" => @default_page, "page_size" => @default_page_size}
 
   def toggle_favourite( number) do
 
@@ -55,10 +58,10 @@ defmodule Fizzbuzz.FizzbuzzContext do
       fizz = rem(number, @fizz_divisor) == 0
       buzz = rem(number, @buzz_divisor) == 0
       cond do
-        fizz and buzz -> @fizzbuzz
-        fizz          -> @fizz
-        buzz          -> @buzz
-        true          -> number
+        fizz and buzz -> {number, @fizzbuzz}
+        fizz          -> {number, @fizz}
+        buzz          -> {number, @buzz}
+        true          -> {number, number}
       end
     end)
   end
@@ -69,8 +72,8 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   defp scan_params( params) do
     Map.merge(@default_params, params)
-    |> Map.update( "page", 1, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
-    |> Map.update( "page_size", 1000, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
+    |> Map.update( "page", @default_page, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
+    |> Map.update( "page_size", @default_page_size, fn el -> if is_bitstring( el), do: String.to_integer( el), else: el end)
   end
 
 end
