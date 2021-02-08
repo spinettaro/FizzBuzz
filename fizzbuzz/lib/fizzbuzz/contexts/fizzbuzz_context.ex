@@ -16,11 +16,11 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
   @default_params %{"page" => @default_page, "page_size" => @default_page_size}
 
-  def toggle_favourite( number) do
+  def mark_favourite( number, is_favourite) do
 
-    case Favourites.is_favourite?( number) do
-      true  -> Favourites.delete_favourite( number)
-      false -> Favourites.add_favourite( number)
+    case is_favourite do
+      true  -> Favourites.add_favourite( number)
+      false -> Favourites.delete_favourite( number)
     end
 
   end

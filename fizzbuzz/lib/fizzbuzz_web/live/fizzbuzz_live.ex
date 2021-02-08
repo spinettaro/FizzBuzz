@@ -22,8 +22,15 @@ defmodule FizzbuzzWeb.FizzbuzzLive do
   end
 
   @impl true
-  def handle_event("toggle-favourite", %{"num" => num}, socket) do
-    FizzbuzzContext.toggle_favourite( num)
+  def handle_event("add-favourite", %{"num" => num}, socket) do
+    FizzbuzzContext.mark_favourite( num, true)
+    params= socket.assigns.paged_fizzbuzz
+    {:noreply, load_data(socket, params) }
+  end
+
+  @impl true
+  def handle_event("delete-favourite", %{"num" => num}, socket) do
+    FizzbuzzContext.mark_favourite( num, false)
     params= socket.assigns.paged_fizzbuzz
     {:noreply, load_data(socket, params) }
   end

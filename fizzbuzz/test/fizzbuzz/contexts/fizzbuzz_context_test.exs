@@ -152,7 +152,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
   test "Given number no favourite using toggle makes it as favourite" do
     # ARRANGE
     # ACT
-    FizzbuzzContext.toggle_favourite( 5)
+    FizzbuzzContext.mark_favourite( 5, true)
     # ASSERT
     assert( Favourites.is_favourite?(5))
   end
@@ -160,8 +160,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
   test "Given number favourite using toggle makes it as no favourite" do
     # ARRANGE
     # ACT
-    FizzbuzzContext.toggle_favourite( 5)
-    FizzbuzzContext.toggle_favourite( 5)
+    FizzbuzzContext.mark_favourite( 5, false)
     # ASSERT
     assert( not Favourites.is_favourite?(5) )
   end
@@ -191,7 +190,7 @@ defmodule Fizzbuzz.FizzbuzzContextTest do
     # ARRANGE
     # ACT
     # ASSERT
-    assert_raise(Ecto.Query.CastError, fn -> FizzbuzzContext.toggle_favourite( "a") end)
+    assert_raise(Ecto.InvalidChangesetError, fn -> FizzbuzzContext.mark_favourite( "a", true) end)
   end
 
 end
