@@ -53,7 +53,7 @@ defmodule Fizzbuzz.FizzbuzzContext do
 
 
   def fizzbuzz(from, to, favourites) when is_integer(from) and is_integer(from) and to <= @to_limit and is_list( favourites) do
-    Enum.map(from..to, fn number -> {number, fizzbuzz( number), is_favourite?( number, favourites) } end)
+    Enum.map(from..to, fn number -> [number, fizzbuzz( number), is_favourite?( number, favourites) ] end)
   end
 
   def fizzbuzz(from, to, _favourites) do
