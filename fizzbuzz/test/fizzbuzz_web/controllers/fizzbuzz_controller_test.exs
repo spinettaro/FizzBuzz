@@ -36,7 +36,7 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
     # ASSERT
     assert 200 == conn.status
     result= Jason.decode!( conn.resp_body)
-    assert( [1,1,true] == result["result"])
+    assert( [1,true] == result["result"])
   end
 
   test "fizzbuzz mark 1 to favourite true and then false", %{conn: conn} do
@@ -47,7 +47,7 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
     assert 200 == conn.status
     assert 200 == conn.status
     result= Jason.decode!( conn.resp_body)
-    assert( [1,1,false] == result["result"])
+    assert( [1,false] == result["result"])
   end
 
 end
