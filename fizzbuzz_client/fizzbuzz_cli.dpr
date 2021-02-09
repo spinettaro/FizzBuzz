@@ -44,7 +44,7 @@ begin
     cl := TCommandLine.Create;
     try
         try
-            Result := CreateFizzbuzzTS.DoCommand(cl);
+            Result := CreateFizzbuzzTS.DoCommand(cl, CommandLineParser.GetCommandLine);
             Writeln(Result);
         except
             on E: ECLPConfigurationError do
