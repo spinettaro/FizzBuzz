@@ -2,10 +2,10 @@
 <section class="phx-hero">
   <%= for [number, display, is_favourite] <- @paged_fizzbuzz["items"] do %>
       <%= if is_favourite do %>
-        <a href="#" phx-click="add-favourite" phx-value-num=<%= number %>>
+        <a href="#" phx-click="delete-favourite" phx-value-num=<%= number %>>
         <i class="fa fa-star" aria-hidden="true"></i>
       <% else %>
-        <a href="#" phx-click="delete-favourite" phx-value-num=<%= number %>>
+        <a href="#" phx-click="add-favourite" phx-value-num=<%= number %>>
         <i class="fa fa-star-o" aria-hidden="true"></i>
       <% end %>
     </a>
