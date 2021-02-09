@@ -13,7 +13,8 @@ interface
 
 uses
     TestFramework,
-    FizzBuzzTSU;
+    FizzBuzzTSU,
+    CommandLineU;
 
 type
   // Test methods for class IFizzbuzzTransactionScript
@@ -21,6 +22,7 @@ type
     TestFizzbuzzTS = class(TTestCase)
     strict private
         FFizzbuzzTS: IFizzbuzzTransactionScript;
+        cl:          TCommandLine;
     public
         procedure SetUp; override;
         procedure TearDown; override;
@@ -28,27 +30,30 @@ type
         procedure TestFizzbuzz;
         procedure TestFavouritesTrue;
         procedure TestFavouritesFalse;
+        procedure TestDoCommandBadCommandInCommandLine;
     end;
 
 implementation
+
+uses
+    System.SysUtils;
 
 procedure TestFizzbuzzTS.SetUp;
 begin
   // TODO: Initialize FIFizzbuzzCLI
     FFizzbuzzTS := CreateFizzbuzzTS;
-
+    cl := TCommandLine.Create;
 end;
 
 procedure TestFizzbuzzTS.TearDown;
 begin
     FFizzbuzzTS := nil;
+    cl.free;
 end;
 
 procedure TestFizzbuzzTS.TestFizzbuzz;
 var
     ReturnValue: string;
-    aSize:       Integer;
-    aPage:       Integer;
 
 const
     ExpectedResult =
@@ -56,9 +61,22 @@ const
         + '[14,14,false],[15,"FizzBuzz",false]],"page":1,"page_size":15,"total_pages":6666666667,"total_results":100000000000}';
 begin
   // ARRANGE ACT
-    ReturnValue := FFizzbuzzTS.Fizzbuzz(1, 15);
+    ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfizzbuzz -p1 -s15');
   // ASSERT
     CheckEquals(ExpectedResult, ReturnValue);
+end;
+
+procedure TestFizzbuzzTS.TestDoCommandBadCommandInCommandLine;
+begin
+    try
+        FFizzbuzzTS.DoCommand(cl, '-cbadcommand');
+        CheckTrue(False);
+    except
+        on E: Exception do
+        begin
+            CheckEquals(E.Message, 'Command badcommand not valid');
+        end;
+    end;
 end;
 
 procedure TestFizzbuzzTS.TestFavouritesFalse;
@@ -69,7 +87,7 @@ const
 
 begin
     // ARRANGE ACT
-    ReturnValue := FFizzbuzzTS.Favourites(1, False);
+    ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfavourites -n1 -f0');
      // ASSERT
     CheckEquals(ExpectedResult, ReturnValue);
 end;
@@ -83,7 +101,7 @@ const
 
 begin
     // ARRANGE ACT
-    ReturnValue := FFizzbuzzTS.Favourites(1, True);
+    ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfizzbuzz -n1 -f1');
  // ASSERT
     CheckEquals(ExpectedResult, ReturnValue);
 end;

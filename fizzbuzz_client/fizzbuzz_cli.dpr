@@ -4,11 +4,11 @@
 {$R *.res}
 
 uses
-  System.SysUtils,
-  Console in 'Console.pas',
-  CommandLineU in 'CommandLineU.pas',
-  GpCommandLineParser in 'GpCommandLineParser.pas',
-  FizzBuzzTSU in 'FizzBuzzTSU.pas';
+    System.SysUtils,
+    Console in 'Console.pas',
+    CommandLineU in 'CommandLineU.pas',
+    GpCommandLineParser in 'GpCommandLineParser.pas',
+    FizzBuzzTSU in 'FizzBuzzTSU.pas';
 
 procedure Logo;
 begin
@@ -36,16 +36,16 @@ end;
 
 var
     cl:     TCommandLine;
-    parsed: boolean;
+    Result: String;
 
 begin
     Logo;
     TextColor(LightGreen);
-
     cl := TCommandLine.Create;
     try
         try
-            parsed := CommandLineParser.Parse(cl);
+            Result := CreateFizzbuzzTS.DoCommand(cl);
+            Writeln(Result);
         except
             on E: ECLPConfigurationError do
             begin
@@ -55,17 +55,18 @@ begin
                     E.ErrorInfo.SwitchName]));
                 Exit;
             end;
+            on E: Exception do
+            begin
+                Writeln(E.Message);
+                Writeln(Format('%s, position = %d, name = %s',
+                    [CommandLineParser.ErrorInfo.Text,
+                    CommandLineParser.ErrorInfo.Position,
+                    CommandLineParser.ErrorInfo.SwitchName]));
+                Writeln;
+                for var ls in CommandLineParser.Usage do
+                    Writeln(ls);
+            end;
         end;
-        if not parsed then
-        begin
-            Writeln(Format('%s, position = %d, name = %s',
-                [CommandLineParser.ErrorInfo.Text,
-                CommandLineParser.ErrorInfo.Position,
-                CommandLineParser.ErrorInfo.SwitchName]));
-            Writeln;
-            for var ls in CommandLineParser.Usage do
-              Writeln( ls);
-        end
     finally
         cl.Free;
     end;

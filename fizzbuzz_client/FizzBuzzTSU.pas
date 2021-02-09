@@ -12,7 +12,9 @@ type
 
     IFizzbuzzTransactionScript = interface
         ['{60B0DA79-2B23-45D6-9D3B-4605B50EF997}']
-        function DoCommand(const aCommand: TCommandLine): String;
+        function DoCommand(
+            const aCommand:     TCommandLine;
+            const aCommandLine: String): String;
         function Fizzbuzz(const aPage, aSize: Integer): String;
         function Favourites(
             const aNumber:   Integer;
@@ -29,7 +31,8 @@ uses
     System.Generics.Collections,
     System.Net.URLClient,
     System.Net.HTTPClient,
-    System.JSON;
+    System.JSON,
+    GpCommandLineParser;
 
 type
     TFizzbuzzTS = class(TInterfacedObject, IFizzbuzzTransactionScript)
@@ -41,7 +44,9 @@ type
             const aTimeout:    Integer = 5000): TPair<Integer, String>;
 
     public
-        function DoCommand(const aCommand: TCommandLine): String;
+        function DoCommand(
+            const aCommand:     TCommandLine;
+            const aCommandLine: String): String;
         function Fizzbuzz(const aPage, aSize: Integer): String;
         function Favourites(
             const aNumber:   Integer;
@@ -50,9 +55,21 @@ type
 
 { TFizzbuzzTS }
 
-function TFizzbuzzTS.DoCommand(const aCommand: TCommandLine): String;
+function TFizzbuzzTS.DoCommand(
+    const aCommand:     TCommandLine;
+    const aCommandLine: String): String;
+var
+    parsed: Boolean;
 begin
-    // TODO
+    parsed := CommandLineParser.Parse(aCommandLine, aCommand);
+    if not parsed then
+        raise Exception.Create('Error');
+    if aCommand.Command.ToLower.Equals(FizzbuzzCommand) then
+        Result := Fizzbuzz(aCommand.Page, aCommand.PageSize)
+    else if aCommand.Command.ToLower.Equals(FavouritesCommand) then
+        Result := Favourites(aCommand.Number, aCommand.Favourite > 0)
+    else
+        raise Exception.CreateFmt('Command %s not valid', [aCommand.Command]);
 end;
 
 function TFizzbuzzTS.DoRequest(
@@ -94,9 +111,10 @@ var
 begin
     lJObj := TJSONObject.Create;
     try
-        lJObj.AddPair('number', TJSONNumber.Create( aNumber));
-        lJObj.AddPair('is_favourite', TJSONBool.Create( Favourite));
-        Result := DoRequest('http://localhost:4000/api/favourites', 'PUT', lJObj.ToJSON).Value;
+        lJObj.AddPair('number', TJSONNumber.Create(aNumber));
+        lJObj.AddPair('is_favourite', TJSONBool.Create(Favourite));
+        Result := DoRequest('http://localhost:4000/api/favourites', 'PUT',
+            lJObj.ToJSON).Value;
     finally
         lJObj.Free;
     end;

@@ -218,6 +218,7 @@ type
   TCLPOptions = set of TCLPOption;
 
   IGpCommandLineParser = interface ['{C9B729D4-3706-46DB-A8A2-1E07E04F497B}']
+    function  GetCommandLine: string;
     function  GetErrorInfo: TCLPErrorInfo;
     function  GetOptions: TCLPOptions;
     procedure SetOptions(const value: TCLPOptions);
