@@ -35,11 +35,8 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
     conn = conn |> put("/api/favourites", number: 1, is_favourite: true)
     # ASSERT
     assert 200 == conn.status
-    conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")
     result= Jason.decode!( conn.resp_body)
-    assert( 1  == result["page"])
-    assert( 1 == result["page_size"])
-    assert( [[1,1,true]] == result["items"])
+    assert( [1,1,true] == result["result"])
   end
 
   test "fizzbuzz mark 1 to favourite true and then false", %{conn: conn} do
@@ -48,11 +45,9 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
     conn = conn |> put("/api/favourites", number: 1, is_favourite: true) |> put("/api/favourites", number: 1, is_favourite: false)
     # ASSERT
     assert 200 == conn.status
-    conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")
+    assert 200 == conn.status
     result= Jason.decode!( conn.resp_body)
-    assert( 1  == result["page"])
-    assert( 1 == result["page_size"])
-    assert( [[1,1,false]] == result["items"])
+    assert( [1,1,false] == result["result"])
   end
 
 end

@@ -23,6 +23,8 @@ defmodule Fizzbuzz.FizzbuzzContext do
       false -> Favourites.delete_favourite( number)
     end
 
+    [number, fizzbuzz(number), is_favourite ]
+
   end
 
   def is_favourite?( number, favourites) when is_number( number) do
