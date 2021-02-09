@@ -4,10 +4,11 @@
 {$R *.res}
 
 uses
-    System.SysUtils,
-    Console in 'Console.pas',
-    CommandLineU in 'CommandLineU.pas',
-    GpCommandLineParser in 'GpCommandLineParser.pas';
+  System.SysUtils,
+  Console in 'Console.pas',
+  CommandLineU in 'CommandLineU.pas',
+  GpCommandLineParser in 'GpCommandLineParser.pas',
+  FizzBuzzTSU in 'FizzBuzzTSU.pas';
 
 procedure Logo;
 begin
