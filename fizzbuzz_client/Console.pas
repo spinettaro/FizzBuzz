@@ -328,7 +328,6 @@ begin
   end
   else
   begin
-    Result := #$FF;
     GetConsoleMode(StdIn, KeyMode);
     SetConsoleMode(StdIn, 0);
     repeat
