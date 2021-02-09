@@ -36,7 +36,8 @@ type
 implementation
 
 uses
-    System.SysUtils;
+    System.SysUtils,
+    System.JSON;
 
 procedure TestFizzbuzzTS.SetUp;
 begin
@@ -54,6 +55,7 @@ end;
 procedure TestFizzbuzzTS.TestFizzbuzz;
 var
     ReturnValue: string;
+    LJOBj:       TJSONObject;
 
 const
     ExpectedResult =
@@ -61,9 +63,19 @@ const
         + '[14,14,false],[15,"FizzBuzz",false]],"page":1,"page_size":15,"total_pages":6666666667,"total_results":100000000000}';
 begin
   // ARRANGE ACT
+
     ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfizzbuzz -p1 -s15');
+    LJOBj := TJSONObject.ParseJSONValue(ReturnValue) as TJSONObject;
+    try
   // ASSERT
-    CheckEquals(ExpectedResult, ReturnValue);
+        CheckEquals(15, LJOBj.GetValue<TJSONArray>('items').Count);
+        CheckEquals(1, LJOBj.GetValue<Integer>('page'));
+        CheckEquals(15, LJOBj.GetValue<Integer>('page_size'));
+        CheckEquals(6666666667, LJOBj.GetValue<Int64>('total_pages'));
+        CheckEquals(100000000000, LJOBj.GetValue<Int64>('total_results'));
+    finally
+        LJOBj.free;
+    end;
 end;
 
 procedure TestFizzbuzzTS.TestDoCommandBadCommandInCommandLine;
@@ -101,7 +113,7 @@ const
 
 begin
     // ARRANGE ACT
-    ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfizzbuzz -n1 -f1');
+    ReturnValue := FFizzbuzzTS.DoCommand(cl, '-cfavourites -n1 -f1');
  // ASSERT
     CheckEquals(ExpectedResult, ReturnValue);
 end;
