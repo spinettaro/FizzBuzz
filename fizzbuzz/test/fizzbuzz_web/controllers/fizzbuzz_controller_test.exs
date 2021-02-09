@@ -32,7 +32,7 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
   test "fizzbuzz mark 1 as favourite", %{conn: conn} do
     # ARRANGE
     # ACT
-    conn = conn |> put("/api/fizzbuzz", number: 1, is_favourite: true)
+    conn = conn |> put("/api/favourites", number: 1, is_favourite: true)
     # ASSERT
     assert 200 == conn.status
     conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")
@@ -45,7 +45,7 @@ defmodule FizzbuzzWeb.FizzbuzzControllerTest do
   test "fizzbuzz mark 1 to favourite true and then false", %{conn: conn} do
     # ARRANGE
     # ACT
-    conn = conn |> put("/api/fizzbuzz", number: 1, is_favourite: true) |> put("/api/fizzbuzz", number: 1, is_favourite: false)
+    conn = conn |> put("/api/favourites", number: 1, is_favourite: true) |> put("/api/favourites", number: 1, is_favourite: false)
     # ASSERT
     assert 200 == conn.status
     conn = conn |> get("/api/fizzbuzz?page=1&page_size=1")

@@ -8,7 +8,7 @@ defmodule FizzbuzzWeb.Api.FizzbuzzController do
     json conn, FizzbuzzContext.paged_fizzbuzz( params)
   end
 
-  def mark_fizzbuzz( conn, %{"number" => number, "is_favourite" => is_favourite}) do
+  def mark_favourite( conn, %{"number" => number, "is_favourite" => is_favourite}) do
     FizzbuzzContext.mark_favourite( number, is_favourite)
     json conn, :ok
   end
