@@ -1,0 +1,8 @@
+*.stat
+Win32
+__history
+__recovery
+Android
+*.local
+*.identcache
+*.dcu
