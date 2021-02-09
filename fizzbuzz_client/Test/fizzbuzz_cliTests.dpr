@@ -17,7 +17,9 @@ program fizzbuzz_cliTests;
 uses
   DUnitTestRunner,
   TestFizzBuzzTSU in 'TestFizzBuzzTSU.pas',
-  FizzBuzzTSU in '..\FizzBuzzTSU.pas';
+  FizzBuzzTSU in '..\FizzBuzzTSU.pas',
+  CommandLineU in '..\CommandLineU.pas',
+  GpCommandLineParser in '..\GpCommandLineParser.pas';
 
 {$R *.RES}
 
